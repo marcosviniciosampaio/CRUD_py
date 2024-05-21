@@ -21,3 +21,7 @@ class Vendedor:
     comando = f'UPDATE vendedores SET email = ("novoemail@gmail.com") WHERE nome = "João"'
     cursor.execute(comando)
     conexao.commit() # edita o banco de dados
+    #DELETE
+    comando = f'DELETE FROM vendedores WHERE nome = "João"'
+    cursor.execute(comando)
+    conexao.commit() # edita o banco de dados
