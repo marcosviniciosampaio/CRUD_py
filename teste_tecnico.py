@@ -1,16 +1,14 @@
 import mysql.connector
 
+conexao = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password='@Estagio123',
+    database='crud',
+)
+cursor = conexao.cursor()
 class Vendedor:
-    #conecta o banco de dados local:
-    def conectar_banco(self):
-        try:
-            conexao = mysql.connector.connect(host="localhost",
-                                              user="root",
-                                              password="@Estagio123",
-                                              database="crud")
-            cursor = conexao.cursor()
-            return conexao, cursor
-        except Exception as e:
-            print(f"Erro ao conectar ao banco de dados: {e}")
-            return None, None
-
+    #POST
+    comando = f"INSERT INTO vendedores (nome, cpf, data_nascimento, email, estado) VALUES ('João', '11109890202', '2001/09/09', 'joao@gmail.com', 'SC')"
+    cursor.execute(comando)
+    conexao.commit()
