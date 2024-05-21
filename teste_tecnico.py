@@ -12,3 +12,8 @@ class Vendedor:
     comando = f"INSERT INTO vendedores (nome, cpf, data_nascimento, email, estado) VALUES ('João', '11109890202', '2001/09/09', 'joao@gmail.com', 'SC')"
     cursor.execute(comando)
     conexao.commit()
+    #GET
+    comando = f'SELECT * FROM vendedores'
+    cursor.execute(comando)
+    resultado = cursor.fetchall()
+    print(resultado)
