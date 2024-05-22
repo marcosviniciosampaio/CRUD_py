@@ -1,4 +1,6 @@
 import mysql.connector
+import pandas as pd
+import os
 
 conexao = mysql.connector.connect(
     host='localhost',
@@ -21,7 +23,7 @@ class Vendedor:
         conexao.commit()
 
     def getVendedores(self):
-        comando = f'SELECT * FROM vendedores'
+        comando = 'SELECT * FROM vendedores'
         cursor.execute(comando)
         resultado = cursor.fetchall()
         print(resultado)
@@ -29,23 +31,66 @@ class Vendedor:
     def updateEmailByName(self, nome, email):
         self.nome = nome
         self.email = email
-
         comando = 'UPDATE vendedores SET email = %s WHERE nome = %s'
         valores = (self.email, self.nome)
         cursor.execute(comando, valores)
         conexao.commit()
+
     def deleteByName(self, nome):
         self.nome = nome
-        comando = f'DELETE FROM vendedores WHERE nome = %s'
+        comando = 'DELETE FROM vendedores WHERE nome = %s'
         valores = (self.nome,)
         cursor.execute(comando, valores)
         conexao.commit()
 
+    def exportToExcel(self, file_path):
+        comando = 'SELECT * FROM vendedores'
+        cursor.execute(comando)
+        resultado = cursor.fetchall()
+        colunas = [desc[0] for desc in cursor.description]
+        df = pd.DataFrame(resultado, columns=colunas)
+        df.to_excel(file_path, index=False)
+        print(f"Dados exportados para {file_path}")
+
+    def importFromExcel(self, file_path):
+        if not os.path.exists(file_path):
+            print(f"Arquivo não encontrado: {file_path}")
+            return
+        df = pd.read_excel(file_path)
+        for index, row in df.iterrows():
+            comando_select = 'SELECT cpf FROM vendedores WHERE cpf = %s'
+            cursor.execute(comando_select, (row['cpf'],))
+            resultado = cursor.fetchone()
+            if resultado:
+                comando_update = '''
+                    UPDATE vendedores 
+                    SET nome = %s, data_nascimento = %s, email = %s, estado = %s 
+                    WHERE cpf = %s
+                '''
+                valores = (row['nome'], row['data_nascimento'], row['email'], row['estado'], row['cpf'])
+                cursor.execute(comando_update, valores)
+            else:
+                comando_insert = '''
+                    INSERT INTO vendedores (nome, cpf, data_nascimento, email, estado) 
+                    VALUES (%s, %s, %s, %s, %s)
+                '''
+                valores = (row['nome'], row['cpf'], row['data_nascimento'], row['email'], row['estado'])
+                cursor.execute(comando_insert, valores)
+        conexao.commit()
+        print(f"Dados do arquivo {file_path} foram importados e atualizados no banco de dados")
+
+print(f"Current directory: {os.getcwd()}")
+
 vendedor = Vendedor()
-#vendedor.post('marcos', '11110989997', '2001/09/09', 'marcos@gmail.com', 'SP')
-#vendedor.updateEmailByName('João', 'marcosnovoemail@gmail.com' )
+vendedor.exportToExcel('vendedores.xlsx')
+vendedor.importFromExcel('C:/Users/Marcos/PycharmProjects/pythonProject/vendedores.xlsx')
+
+'''
+vendedor = Vendedor()
+vendedor.post('marcos', '11110989997', '2001/09/09', 'marcos@gmail.com', 'SP')
+vendedor.updateEmailByName('João', 'marcosnovoemail@gmail.com' )
 vendedor.deleteByName('João')
-vendedor.getVendedores()
+vendedor.getVendedores()'''
 
 
 
