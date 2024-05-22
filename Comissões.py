@@ -24,4 +24,3 @@ def calcular_comissoes():
 # Executando a função e imprimindo o resultado
 comissoes = calcular_comissoes()
 print(comissoes)
-
