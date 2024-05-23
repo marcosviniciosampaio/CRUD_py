@@ -21,6 +21,8 @@ def calcular_comissoes():
     # Retornando o DataFrame com as comissões
     return total_comissoes_vendedor
 
-# Executando a função e imprimindo o resultado
+#######Exemplo de uso##########
+'''
 comissoes = calcular_comissoes()
 print(comissoes)
+'''

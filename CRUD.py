@@ -81,16 +81,19 @@ class Vendedor:
 
 print(f"Current directory: {os.getcwd()}")
 
+####Exemplos de Uso#######
+'''
 vendedor = Vendedor()
 vendedor.exportToExcel('vendedores.xlsx')
 vendedor.importFromExcel('C:/Users/Marcos/PycharmProjects/pythonProject/vendedores.xlsx')
-
+'''
 '''
 vendedor = Vendedor()
 vendedor.post('marcos', '11110989997', '2001/09/09', 'marcos@gmail.com', 'SP')
-vendedor.updateEmailByName('João', 'marcosnovoemail@gmail.com' )
-vendedor.deleteByName('João')
-vendedor.getVendedores()'''
+vendedor.updateEmailByName('marcos', 'marcosnovoemail@gmail.com' )
+vendedor.deleteByName('marcos')
+vendedor.getVendedores()
+'''
 
 
 

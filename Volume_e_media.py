@@ -16,6 +16,8 @@ def volume_e_media_por_canal():
     # Retornando o DataFrame com o volume de vendas e a média por profissional para cada canal de venda
     return vendas_por_canal
 
-# Executando a função e imprimindo o resultado
+####Exemplo de uso######
+'''
 volume_e_media_canal = volume_e_media_por_canal()
-print(volume_e_media_canal)
+print(volume_e_media_canal) 
+'''
