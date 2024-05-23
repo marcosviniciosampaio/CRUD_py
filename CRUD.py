@@ -26,6 +26,7 @@ class Vendedor:
         comando = 'SELECT * FROM vendedores'
         cursor.execute(comando)
         resultado = cursor.fetchall()
+        return resultado
         print(resultado)
 
     def updateEmailByName(self, nome, email):
@@ -88,11 +89,11 @@ vendedor.exportToExcel('vendedores.xlsx')
 vendedor.importFromExcel('C:/Users/Marcos/PycharmProjects/pythonProject/vendedores.xlsx')
 '''
 '''
-vendedor = Vendedor()
-vendedor.post('marcos', '11110989997', '2001/09/09', 'marcos@gmail.com', 'SP')
-vendedor.updateEmailByName('marcos', 'marcosnovoemail@gmail.com' )
-vendedor.deleteByName('marcos')
-vendedor.getVendedores()
+    vendedor = Vendedor()
+    vendedor.post('marcos', '11110989997', '2001/09/09', 'marcos@gmail.com', 'SP')
+    vendedor.updateEmailByName('marcos', 'marcosnovoemail@gmail.com' )
+    vendedor.deleteByName('marcos')
+    vendedor.getVendedores()
 '''
 
 
